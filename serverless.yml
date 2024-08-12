@@ -13,13 +13,14 @@ provider:
       Action:
         - dynamodb:*
       Resource:
-        - arn:aws:dynamodb:sa-east-1:585008045054:table/PlanetsTable
-        - arn:aws:dynamodb:sa-east-1:585008045054:table/FilmTable
-        - arn:aws:dynamodb:sa-east-1:585008045054:table/PeopleTable
+        - arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/${self:custom.tablePlanets}
+        - arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/${self:custom.tableFilms}
+        - arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/${self:custom.tablePeople}
 
 functions:
   api:
     handler: src/handler.handler
+    timeout: 30
     events:
       - httpApi: "*"
 

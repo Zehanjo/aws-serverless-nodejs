@@ -1,18 +1,25 @@
-const { ScanCommand, PutCommand } = require("@aws-sdk/lib-dynamodb");
-const { FilmModel } = require("../domain/model/Film");
-const FilmInterface = require("../domain/interface/Film.interface")
-const { v4 } = require("uuid");
-const axios = require("axios");
+import { ScanCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
+import { FilmInterface } from "../domain/interface/Film.interface";
+import { FilmModel } from "../domain/model/Film";
+
+interface DynamoDBClient {
+  send(command: any): Promise<any>;
+}
 
 class FilmRepositoryServerless extends FilmInterface {
-  constructor(dynamoClient) {
+  private dynamoClient: DynamoDBClient;
+  private tableName: string;
+
+  constructor(dynamoClient: DynamoDBClient) {
     super();
     this.dynamoClient = dynamoClient;
     this.tableName = "FilmTable";
   }
 
-  async fetchFilmFromSwapi() {
-    let data = [];
+  async fetchFilmFromSwapi(): Promise<any[]> {
+    let data: any[] = [];
     let nextPageURL = "https://swapi.py4e.com/api/films/";
 
     while (nextPageURL) {
@@ -34,25 +41,28 @@ class FilmRepositoryServerless extends FilmInterface {
     return data;
   }
 
-  async fetchFilm() {
+  async fetchFilm(): Promise<FilmModel[]> {
     console.log("fetchFilm");
-    const data = [];
+    const data: FilmModel[] = [];
     const params = { TableName: this.tableName };
     try {
       const command = new ScanCommand(params);
       const { Items } = await this.dynamoClient.send(command);
-      Items.forEach((element) => {
-        const dataElement = new FilmModel(element);
-        data.push(dataElement);
-      });
+      if (Items) {
+        Items.forEach((element: any) => {
+          const dataElement = new FilmModel(element);
+          data.push(dataElement);
+        });
+      }
       return data;
     } catch (error) {
       console.error(error);
+      throw new Error("Failed to fetch films");
     }
   }
 
-  async saveFilm(data) {
-    const id = v4();
+  async saveFilm(data: any): Promise<void> {
+    const id = uuidv4();
     const params = {
       TableName: this.tableName,
       Item: {
@@ -65,4 +75,4 @@ class FilmRepositoryServerless extends FilmInterface {
   }
 }
 
-module.exports = FilmRepositoryServerless;
+export default FilmRepositoryServerless;
