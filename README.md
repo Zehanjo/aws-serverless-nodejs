@@ -91,46 +91,46 @@ src/
 ├── module/
 │   ├── film/
 │   │   ├── application/
-│   │   │   └── Film.service.js
+│   │   │   └── Film.service.Planets
 │   │   ├── domain/
 │   │   │   ├── interface/
-│   │   │   │   └── Film.interface.js
+│   │   │   │   └── Film.interface.ts
 │   │   │   └── model/
-│   │   │       └── Film.js
+│   │   │       └── Film.ts
 │   │   └── infraestructure/
-│   │       ├── Film.repository.js
+│   │       ├── Film.repository.ts
 │   │       └── controller/
-│   │           └── Film.js
+│   │           └── Film.ts
 │   │
 │   ├── people/
 │   │   ├── application/
-│   │   │   └── People.service.js
+│   │   │   └── People.service.ts
 │   │   ├── domain/
 │   │   │   ├── interface/
-│   │   │   │   └── People.interface.js
+│   │   │   │   └── People.interface.ts
 │   │   │   └── model/
-│   │   │       └── People.js
+│   │   │       └── People.ts
 │   │   └── infraestructure/
-│   │       ├── People.repository.js
+│   │       ├── People.repository.ts
 │   │       └── controller/
-│   │           └── People.js
+│   │           └── People.ts
 │   │
 │   └── planet/
 │       ├── application/
-│       │   └── Planet.service.js
+│       │   └── Planet.service.ts
 │       ├── domain/
 │       │   ├── interface/
-│       │   │   └── Planet.interface.js
+│       │   │   └── Planet.interface.ts
 │       │   └── model/
-│       │       └── Planet.js
+│       │       └── Planet.ts
 │       └── infraestructure/
-│           ├── Planet.repository.js
+│           ├── Planet.repository.ts
 │           └── controller/
-│               └── Planet.js
+│               └── Planet.ts
 │
-├── handler.js
+├── handler.ts
 └── routes/
-    └── routes.js
+    └── routes.ts
 ```
 
 ## Contribuir
